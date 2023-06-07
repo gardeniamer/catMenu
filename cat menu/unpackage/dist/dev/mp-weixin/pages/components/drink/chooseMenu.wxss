@@ -1,0 +1,17 @@
+
+.chooseMenu {
+	width: 100%;
+	height: 100rpx;
+	border-bottom: 1px solid #a9a9a9;
+	background-color: #fff;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	text-align: center;
+	line-height: 100rpx;
+}
+.menu {
+	border-bottom: 4px solid #95d6bf;
+	font-weight: bold;
+}
+

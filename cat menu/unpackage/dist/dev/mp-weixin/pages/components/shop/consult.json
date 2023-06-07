@@ -1,0 +1,8 @@
+{
+  "enablePullDownRefresh": false,
+  "transparentTitle": "always",
+  "usingComponents": {
+    "navbar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
+    "consult-content": "/pages/components/shop/consultContent"
+  }
+}

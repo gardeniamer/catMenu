@@ -1,0 +1,7 @@
+{
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "uni-calendar": "/uni_modules/uni-calendar/components/uni-calendar/uni-calendar",
+    "navbar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar"
+  }
+}

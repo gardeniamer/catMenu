@@ -1,0 +1,44 @@
+
+.beforeLogin {
+	width: 100%;
+	height: 1340rpx;
+}
+image {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+}
+
+
+
+uni-swiper {
+	display: block;
+	height: 1320rpx;
+}
+swiper-item {
+	overflow: auto;
+}
+.swiper-item {
+	margin: 0 auto;
+	width: 700rpx;
+	height: 1247rpx;
+}
+.swiper-item image {
+	width: 100%;
+	height: 100%;
+}
+.entry {
+	margin: 0 auto;
+	width: 200rpx;
+	height: 60rpx;
+	font-size: 18px;
+	text-align: center;
+	line-height: 60rpx;
+	background-color: #c7e9dd;
+	-webkit-transform: translateY(-30px);
+	        transform: translateY(-30px);
+	border-radius: 40rpx;
+	color: #fff;
+}
+
+

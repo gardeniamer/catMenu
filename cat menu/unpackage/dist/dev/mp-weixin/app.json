@@ -1,0 +1,63 @@
+{
+  "pages": [
+    "pages/components/guide",
+    "pages/components/beforeLogin",
+    "pages/main",
+    "pages/components/drink",
+    "pages/components/shop",
+    "pages/components/info",
+    "pages/components/login",
+    "pages/components/login2",
+    "pages/components/info/attendance",
+    "pages/components/info/pet",
+    "pages/components/shop/consult",
+    "pages/components/midButton",
+    "pages/components/catMsg",
+    "pages/components/catMsgEdit"
+  ],
+  "subPackages": [],
+  "window": {
+    "transparentTitle": "always",
+    "navigationBarBackgroundColor": "#f0f0f0"
+  },
+  "tabBar": {
+    "color": "#000000",
+    "position": "bottom",
+    "selectedColor": "#95d6bf",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "text": "社区",
+        "iconPath": "./static/navigator/talk.png",
+        "selectedIconPath": "static/navigator/s_talk.png",
+        "pagePath": "pages/main"
+      },
+      {
+        "text": "饮品",
+        "iconPath": "./static/navigator/drink.png",
+        "selectedIconPath": "static/navigator/s_drink.png",
+        "pagePath": "pages/components/drink"
+      },
+      {
+        "text": "商城",
+        "iconPath": "./static/navigator/shop.png",
+        "selectedIconPath": "static/navigator/s_shop.png",
+        "pagePath": "pages/components/shop"
+      },
+      {
+        "text": "我的",
+        "iconPath": "./static/navigator/info.png",
+        "selectedIconPath": "static/navigator/s_info.png",
+        "pagePath": "pages/components/info"
+      }
+    ],
+    "midButton": {
+      "iconPath": "static/navigator/camera.png",
+      "height": "65px",
+      "iconWidth": "50px",
+      "backgroundImage": "static/navigator/middleBgI.png"
+    }
+  },
+  "usingComponents": {}
+}

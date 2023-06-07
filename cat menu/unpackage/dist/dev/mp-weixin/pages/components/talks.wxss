@@ -1,0 +1,38 @@
+
+.talks image {
+	width: 22px;
+	height: 18px;
+	-webkit-transform: translate(8rpx,4rpx);
+	        transform: translate(8rpx,4rpx);
+}
+.talks {
+	margin: 10px auto;
+	width: 700rpx;
+	height: 110rpx;
+	background-color: black;
+	border-radius: 50rpx;
+	background-color: #ffffff;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+.attention,.nearBy,.find {
+	width: 160rpx;
+	height: 88rpx;
+	text-align: center;
+	line-height: 88rpx;
+	font-size: 20px;
+}
+.nearByAll image {
+	width: 20px;
+	height: 20px;
+}
+.findAll image {
+	width: 22px;
+	height: 16px;
+	-webkit-transform: translate(8rpx,3rpx);
+	        transform: translate(8rpx,3rpx);
+}
+
+

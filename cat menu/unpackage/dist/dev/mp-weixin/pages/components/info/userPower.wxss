@@ -1,0 +1,37 @@
+
+.powerAll {
+	margin: 10px auto 10px auto;
+	width: 700rpx;
+	height: 210rpx;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #fff;
+	border-radius: 10px;
+}
+.powers {
+	width: 22%;
+	height: 100%;
+	text-align: center;
+	-webkit-transform: translateY(40rpx);
+	        transform: translateY(40rpx);
+}
+.powers image {
+	width: 100rpx;
+	height: 80rpx;
+}
+.special {
+	width: 54rpx !important;
+}
+.special2 {
+	width: 130rpx !important;
+	-webkit-transform: translateX(-10rpx);
+	        transform: translateX(-10rpx);
+}
+.powerName {
+	font-family: STCaiyun;
+	color: #c1b28c;
+}
+
+

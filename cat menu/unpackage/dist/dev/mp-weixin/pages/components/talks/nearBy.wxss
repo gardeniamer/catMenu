@@ -1,0 +1,73 @@
+
+.title {
+	width: 150rpx;
+	height: 60rpx;
+	text-align: center;
+	line-height: 60rpx;
+	background-color: #ffecd2;
+	border-radius: 60rpx;
+	-webkit-transform: translateX(30rpx);
+	        transform: translateX(30rpx);
+}
+.catMsg {
+	margin: 0 auto;
+	width: 700rpx;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+}
+.msgDetail {
+	margin: 5px 0 10px 0;
+	width: 310rpx;
+	height: 420rpx;
+	background-color: #fff;
+	border-radius: 12rpx;
+}
+.detailPhoto {
+	width: 100%;
+	height: 70%;
+	border-top-left-radius: 10rpx;
+	border-top-right-radius: 12rpx;
+}
+.detailContent {
+	width: 90%;
+	margin: 0 auto;
+	font-size: 10px;
+}
+.monsterMsg {
+	margin: 0 auto;
+	width: 95%;
+	height: 40rpx;
+	-webkit-transform: translateY(9rpx);
+	        transform: translateY(9rpx);
+}
+.monsterPhoto {
+	width: 18px;
+	height: 18px;
+	border-radius: 18px;
+	vertical-align: middle;
+}
+.monsterName {
+	display: inline-block;
+	width: 155rpx;
+	font-size: 8px;
+	-webkit-transform: translateX(12rpx);
+	        transform: translateX(12rpx);
+}
+.heart {
+	float: right;
+	width: 13px;
+	height: 12px;
+	-webkit-transform: translate(-60rpx,14rpx);
+	        transform: translate(-60rpx,14rpx);
+}
+.heartCount {		
+	float: right;
+	font-size: 12px;
+	-webkit-transform: translate(16rpx,10rpx);
+	        transform: translate(16rpx,10rpx);
+}
+
+

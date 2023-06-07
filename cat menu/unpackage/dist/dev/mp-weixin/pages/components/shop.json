@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "navbar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
+    "shop-banner": "/pages/components/shop/shopBanner",
+    "classification": "/pages/components/shop/classification",
+    "combo-vip": "/pages/components/shop/comboVip",
+    "shop-brand": "/pages/components/shop/shopBrand",
+    "vip-combo": "/pages/components/shop/vipCombo"
+  }
+}

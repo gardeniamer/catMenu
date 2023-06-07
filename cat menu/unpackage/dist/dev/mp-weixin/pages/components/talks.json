@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "attention": "/pages/components/talks/attention",
+    "find": "/pages/components/talks/find",
+    "near-by": "/pages/components/talks/nearBy"
+  }
+}

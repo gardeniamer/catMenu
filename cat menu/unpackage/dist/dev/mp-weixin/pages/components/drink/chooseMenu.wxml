@@ -1,0 +1,1 @@
+<view class="chooseMenu"><view data-event-opts="{{[['tap',[['changeMenu',['typical',0]]]]]}}" class="{{[(menuName=='typical')?'menu':'']}}" bindtap="__e">经典菜单</view><view data-event-opts="{{[['tap',[['changeMenu',['hot',1]]]]]}}" class="{{[(menuName=='hot')?'menu':'']}}" bindtap="__e">热销排行</view></view>

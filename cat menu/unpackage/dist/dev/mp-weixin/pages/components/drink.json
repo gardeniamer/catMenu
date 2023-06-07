@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "navbar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
+    "position": "/pages/components/drink/position",
+    "choose-menu": "/pages/components/drink/chooseMenu",
+    "drink-detail": "/pages/components/drink/drinkDetail"
+  }
+}

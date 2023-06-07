@@ -1,0 +1,7 @@
+{
+  "enablePullDownRefresh": false,
+  "transparentTitle": "none",
+  "navigationBarBackgroundColor": "#bae3d5",
+  "navigationBarTitleText": "快捷登录",
+  "usingComponents": {}
+}

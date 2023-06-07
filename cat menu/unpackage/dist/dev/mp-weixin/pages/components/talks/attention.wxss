@@ -1,0 +1,198 @@
+
+.inUserName {
+	margin: 0 0 0 20rpx;
+}
+.more {
+	text-align: left;
+	color: #a9a9a9;
+	font-size: 9px;
+}
+.intro {
+	display: inline-block;
+	width: 180rpx;
+	text-align: left;
+	font-size: 14px;
+}
+.friendnomi {
+	display: inline-block;
+	font-size: 14px;
+	background-color: #ffecd2;
+	padding: 5px;
+	border-radius: 22px;
+	-webkit-transform: translate(8px,6px);
+	        transform: translate(8px,6px);
+}
+.friendRefresh {
+	display: inline-block;
+	float: right;
+	font-size: 12px;
+	-webkit-transform: translate(-8px,10px);
+	        transform: translate(-8px,10px);
+	color: #a6a6a6;
+}
+.attentionFriend {
+	width: 700rpx;
+	height: 300rpx;
+	margin: 30px auto 0 auto;
+	background-color: #f9f9f9;
+}
+.attentionContent {
+	width: 700rpx;
+	height: 210rpx;
+	display: inline-block;
+	line-height: 210rpx;
+	text-align: center;
+	font-size: 36rpx;
+	white-space: nowrap;
+	-webkit-transform: translateY(12px);
+	        transform: translateY(12px);
+}
+.attentionItem {
+	display: inline-block;
+	position: relative;
+	width: 50%;
+	height: 210rpx;
+	line-height: 210rpx;
+	text-align: center;
+	font-size: 36rpx;
+	border-radius: 20rpx;
+	margin: 0 10px 0 10px;
+	background-color: #fff;
+}
+.attentionItemIn {
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translateY(-65%);
+	        transform: translateY(-65%);
+	width: 100%;
+	height: 180rpx;
+}
+.itemInUser {
+	width: 100%;
+	height: 80rpx;
+	line-height: 32rpx;
+}
+.inUserPhoto {
+	width: 60rpx;
+	height: 60rpx;
+	vertical-align: middle;
+	border-radius: 30px;
+}
+.inUserName {
+	display: inline-block;
+	width: 90px;
+	height: 60rpx;
+	font-size: 16px;
+	-webkit-transform: translateY(10px);
+	        transform: translateY(10px);
+}
+.itemInCat {
+	margin: 0 auto;
+	width: 80%;
+	height: 48rpx;
+	background-color: #f9f9f9;
+	line-height: 40rpx;
+	-webkit-transform: translateY(5px);
+	        transform: translateY(5px);
+}
+.inCatPhoto {
+	width: 38rpx;
+	height: 38rpx;
+	border-radius: 18rpx;
+	vertical-align: middle;
+}
+.inCatName {
+	display: inline-block;
+	font-size: 10px;
+	color: #a4a4a4;
+	margin: 0 0 0 3px;
+}
+.special {
+	margin: 0 auto;
+	font-size: 14px;
+	line-height: 40rpx;
+	text-align: center;
+	font-weight: bold;
+	width: 150rpx;
+	height: 40rpx;
+	background-color: greenyellow;
+	border-radius: 20px;
+	background-color: #fec374;
+	-webkit-transform: translateY(30rpx);
+	        transform: translateY(30rpx);
+}
+.attentionDetail {
+	margin:10px auto 0 auto;
+	width: 700rpx;
+	height: 700rpx;
+	display: flex;
+	flex-direction: column;
+	background-color: #fff;
+}
+.detailUser,.detailCat {
+	width: 100%;
+	height: 80rpx;
+}
+.detailCat {
+	margin: 5px auto 5px auto;
+	width: 80%;
+	height: 45rpx;
+	background-color: #f9f9f9;
+}
+.catPhoto {
+	flex: 1;
+}
+.userPhoto,.catPhoto {
+	width: 60rpx;
+	height: 60rpx;
+	vertical-align: middle;
+	border-radius: 30px;
+}
+.userName,.catName {
+	margin: 0 0 0 10px;
+	display: inline-block;
+	-webkit-transform: translateY(2px);
+	        transform: translateY(2px);
+}
+.specialMore {
+	float: right;
+	width: 160rpx;
+	height: 60%;
+	display: inline-block;
+	text-align: center;
+	line-height: 48rpx;
+	border-radius: 664rpx;
+	background-color: brown;
+	-webkit-transform: translate(-8px,16rpx);
+	        transform: translate(-8px,16rpx);
+	background-color: #fec374;
+	font-weight: bold;
+}
+.userInfo,.catInfo {
+	display: inline-block;
+	width: 480rpx;
+	height: 100%;
+	-webkit-transform: translate(10px,4px);
+	        transform: translate(10px,4px);
+}
+.catPhoto {
+	width: 38rpx;
+	height: 38rpx;
+	-webkit-transform: translateY(3rpx);
+	        transform: translateY(3rpx);
+}
+.catName {
+	font-size: 10px;
+	color: #a4a4a4;
+}
+.catInfo {
+	width: 240rpx;
+	-webkit-transform: translate(10px,-2px);
+	        transform: translate(10px,-2px);
+}
+.catImg {
+	width: 700rpx;
+	height: 100%;
+}
+
+

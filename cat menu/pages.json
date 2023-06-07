@@ -1,0 +1,140 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		
+		{
+			"path": "pages/components/guide",
+			"style": {
+				"enablePullDownRefresh": false
+			}
+		},
+		
+		{
+			"path": "pages/components/beforeLogin",
+			"style": {
+				"enablePullDownRefresh": false
+			}
+		},
+		
+		{
+			"path": "pages/main",
+			"style": {
+				"onReachBottomDistance": 0.5
+			}
+		},
+		
+		{
+			"path": "pages/components/drink",
+			"style": {}
+		},
+		
+		{
+			"path": "pages/components/shop",
+			"style": {}
+		},
+		
+		{
+			"path": "pages/components/info",
+			"style": {}
+		},
+		
+		{
+			"path": "pages/components/login",
+			"style": {
+				"enablePullDownRefresh": false,
+				"transparentTitle": "none",
+				"navigationBarBackgroundColor": "#bae3d5"
+			}
+		},
+		
+		{
+			"path": "pages/components/login2",
+			"style": {
+				"enablePullDownRefresh": false,
+				"transparentTitle": "none",
+				"navigationBarBackgroundColor": "#bae3d5",
+				"navigationBarTitleText": "快捷登录"
+			}
+		},
+		
+		{
+			"path": "pages/components/info/attendance",
+			"style": {
+				"enablePullDownRefresh": false
+			}
+		},
+		
+		{
+			"path": "pages/components/info/pet",
+			"style": {
+				"enablePullDownRefresh": false
+			}
+		},
+		
+		{
+			"path": "pages/components/shop/consult",
+			"style": {
+				"enablePullDownRefresh": false,
+				"transparentTitle": "always"
+			}
+		},
+		
+		{
+			"path": "pages/components/midButton",
+			"style": {}
+		},
+		
+		{
+			"path": "pages/components/catMsg",
+			"style": {}
+		},
+		
+		{
+			"path": "pages/components/catMsgEdit",
+			"style": {}
+		}
+		
+	],
+	"globalStyle": {
+		// "backgroundColor": "#f0f0f0",
+		"transparentTitle": "always",
+		"navigationBarBackgroundColor": "#f0f0f0"
+		
+	},
+	"uniIdRouter": {},
+	"tabBar": {
+		"color": "#000000",
+		"position": "bottom",
+		"selectedColor": "#95d6bf",
+		"borderStyle": "white",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{	
+				"text": "社区",
+				"iconPath": "./static/navigator/talk.png",
+				"selectedIconPath": "static/navigator/s_talk.png",
+				"pagePath": "pages/main"
+			},
+			{	"text": "饮品",
+				"iconPath": "./static/navigator/drink.png",
+				"selectedIconPath": "static/navigator/s_drink.png",
+				"pagePath": "pages/components/drink"
+			},
+			{	"text": "商城",
+				"iconPath": "./static/navigator/shop.png",
+				"selectedIconPath": "static/navigator/s_shop.png",
+				"pagePath": "pages/components/shop"
+			},
+			{	"text": "我的",
+				"iconPath": "./static/navigator/info.png",
+				"selectedIconPath": "static/navigator/s_info.png",
+				"pagePath": "pages/components/info"
+			}
+		],
+		"midButton": {
+			"iconPath": "static/navigator/camera.png",
+			"height": "65px",
+			"iconWidth": "50px",
+			"backgroundImage": "static/navigator/middleBgI.png"
+		}
+	}
+}

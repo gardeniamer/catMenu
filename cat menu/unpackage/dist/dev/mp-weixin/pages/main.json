@@ -1,0 +1,7 @@
+{
+  "onReachBottomDistance": 0.5,
+  "usingComponents": {
+    "navbar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
+    "talks": "/pages/components/talks"
+  }
+}
