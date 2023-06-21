@@ -13,7 +13,8 @@
 		<uni-calendar :lunar= "true" 
 		:showMonth="false"
 		:selected="selected"
-		:startDate="'1999-3-20'">
+		:startDate="'1999-3-20'"
+		@change="change">
 		</uni-calendar>
 	</view>
 		<view class="clock">
@@ -53,6 +54,29 @@
 <script>
 import navbar from "../../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"
 import calendar from "../../../uni_modules/uni-calendar/components/uni-calendar/uni-calendar.vue"
+
+function getDate(date, AddDayCount = 0) {
+	if (!date) {
+		date = new Date();
+	}
+	if (typeof date !== 'object') {
+		date = date.replace(/-/g, '/');
+	}
+	const dd = new Date(date);
+
+	dd.setDate(dd.getDate() + AddDayCount); // 获取AddDayCount天后的日期
+
+	const y = dd.getFullYear();
+	const m = dd.getMonth() + 1 < 10 ? '0' + (dd.getMonth() + 1) : dd.getMonth() + 1; // 获取当前月份的日期，不足10补0
+	const d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate(); // 获取当前几号，不足10补0
+	return {
+		fullDate: y + '-' + m + '-' + d,
+		year: y,
+		month: m,
+		date: d,
+		day: dd.getDay()
+	};
+}
 export default {
 	components: {
 		navbar
@@ -61,8 +85,9 @@ export default {
 	data() {
 		return {
 			selected:[
-				{date:"2023-5-4",info:'签到'},
+				{date:"2023.6.13",info:'签到'},
 			],
+			data:'',
 			list:[
 				'../../../static/info/attendance1.png',
 				'../../../static/info/attendance2.png',
@@ -77,6 +102,23 @@ export default {
 		}
 	},
 	
+	onLoad() {
+		let year
+		let month
+		let day
+		year = new Date().getFullYear()
+		if( (new Date().getMonth() + 1 ) <= 9) {
+			month = '0' + (new Date().getMonth() + 1)
+		}
+		else {
+			month = new Date().getMonth() + 1
+		}
+		day = new Date().getDate()
+		let all
+		all = year + '-' + month + '-' + day
+		this.data = all
+	},
+	
 	methods: {
 		back() {
 			uni.switchTab({
@@ -84,35 +126,80 @@ export default {
 			})
 		},
 		
+		change(e) {
+			this.data = e.fulldate
+		},
+		
+		
 		clock() {
+			if(this.list2.inputCon != "") {
 			if(this.list2.inputCon == new Date().getFullYear()+'.'+ (new Date().getMonth() + 1)+'.'+ new Date().getDate()){
 				if(this.selected[this.selected.length-1].date == new Date().getFullYear()+'.'+ (new Date().getMonth() + 1)+'.'+ new Date().getDate()){
 					this.selected.pop()
 				}
 				
-				this.selected.push({date:this.list2.inputCon,info:'已打卡'})
-				this.list2.inputCon = ""
-				this.judge=true
-			}
-			else {
-				uni.showToast({
-					icon:"none",
-					title:"打卡仅允许今天(以格式2019.1.1输入)"
-				})
+					this.selected.push({date:this.list2.inputCon,info:'签到'})
+					this.list2.inputCon = ""
+					this.judge=true
+				}
+				else {
+					uni.showToast({
+						icon:"none",
+						title:"打卡仅允许今天(以格式2019.1.1输入)"
+					})
+				}				
 			}
 			
+			else {
+				if(this.data.split("-")[2] != new Date().getDate()){
+					uni.showToast({
+						icon:"none",
+						title:"打卡仅允许今天"
+					})
+				}
+				else {
+					if(this.selected[this.selected.length-1].info == "标记"){
+						this.selected.pop()
+					}
+					if(this.judge != true) {
+						this.selected.push({date:this.data,info:"签到"})
+						uni.showToast({
+							icon:"none",
+							title:"打卡成功"
+						})
+						this.judge=true
+					}
+				}
+			}
+					
 		},
 		
 		record() {
-			if(this.list2.inputCon.split(".").length==3){
-				this.selected.push({date:this.list2.inputCon,info:"标记"})
-				this.list2.inputCon = ""
+			if(this.list2.inputCon != "") {
+				if(this.list2.inputCon.split(".").length==3){
+					this.selected.push({date:this.list2.inputCon,info:"标记"})
+					this.list2.inputCon = ""
+					uni.showToast({
+						icon:"none",
+						title:"标记成功"
+					})
+				}
+				else {
+					uni.showToast({
+						icon:"none",
+						title:"(请以格式2019.1.1输入)"
+					})
+				}
 			}
 			else {
-				uni.showToast({
-					icon:"none",
-					title:"(请以格式2019.1.1输入)"
-				})
+				if(this.selected[this.selected.length-1].date != this.data){
+					this.selected.push({date:this.data,info:"标记"})
+					uni.showToast({
+						icon:"none",
+						title:"标记成功"
+					})
+				}
+
 			}
 		}
 		

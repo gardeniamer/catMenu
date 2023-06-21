@@ -18,6 +18,7 @@
 				<classification></classification>
 				<combo-vip @vipChange="combo"></combo-vip>
 				<shop-brand></shop-brand>
+				<more-content :listMore = "listMore"></more-content>
 			</view>
 			<view v-show = "vipCombo == true">
 				<vip-combo></vip-combo>
@@ -33,6 +34,8 @@ import classification from "./shop/classification.vue"
 import comboVip from "./shop/comboVip.vue"
 import shopBrand from "./shop/shopBrand.vue"
 import vipCombo from "./shop/vipCombo.vue"
+import moreContent from "./shop/moreContent.vue"
+import data from "../data.js"
 export default {
 	components: {
 		navbar,
@@ -41,6 +44,7 @@ export default {
 		comboVip,
 		shopBrand,
 		vipCombo,
+		moreContent
 	},
 	
 	data() {
@@ -53,7 +57,8 @@ export default {
 				'../../static/drink/milkTea4.png'
 				],
 			vipCombo:false,
-			icon:''
+			icon:'',
+			listMore: []
 		}
 	},
 	
@@ -74,6 +79,21 @@ export default {
 	onHide() {
 		this.vipCombo = false
 		this.icon = ""
+	},
+	
+	onReachBottom() {
+		if(this.listMore == "") {
+			this.listMore = data.list11More1
+		}
+		else if(this.listMore == data.list11More1) {
+			this.listMore = data.list11More2
+		}
+		else if(this.listMore == data.list11More2) {
+			this.listMore = data.list11More3
+		}
+		else if(this.listMore == data.list11More3) {
+			this.listMore = data.list11More4
+		}
 	}
 	
 }

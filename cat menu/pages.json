@@ -29,7 +29,9 @@
 		
 		{
 			"path": "pages/components/shop",
-			"style": {}
+			"style": {
+				"onReachBottomDistance": 0.5
+			}
 		},
 		
 		{
