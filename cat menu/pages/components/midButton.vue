@@ -145,6 +145,7 @@
 		background-image: url("../../static/background/background.png");
 		background-repeat: no-repeat;
 		background-size: 100%;
+		height: 1670rpx;
 	}
 	
 	.push {

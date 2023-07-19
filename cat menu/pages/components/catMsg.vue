@@ -65,6 +65,9 @@
 					console.log(err);
 				})
 		})
+		uni.showLoading({
+			title: '加载中'
+		})
 		setTimeout(()=>{
 			uni.request({
 				method:"GET",
@@ -103,6 +106,10 @@
 									},
 									
 									success:(res3) => {
+										uni.hideLoading()
+										uni.showToast({
+											title:"加载成功"
+										})
 										if(res3.data.status < 300) {
 											const data = res3.data.data.list[0]
 											this.list2.nickName = data.nickname	
@@ -132,6 +139,7 @@
 											}
 										}
 										else {
+											uni.hideLoading()
 											uni.showToast({
 												icon:"none",
 												title:res3.data.message
@@ -143,6 +151,7 @@
 								})
 							}
 							else {
+								uni.hideLoading()
 								uni.showToast({
 									icon:"none",
 									title:res2.data.message
