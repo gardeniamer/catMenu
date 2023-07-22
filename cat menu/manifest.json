@@ -87,10 +87,11 @@
                 "iosStyle" : "common",
                 "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "C:/Users/默然/Desktop/素材/猫谱ui/beforeLogin.png",
-                    "xhdpi" : "C:/Users/默然/Desktop/素材/猫谱ui/beforeLogin.png",
-                    "xxhdpi" : "C:/Users/默然/Desktop/素材/猫谱ui/beforeLogin.png"
-                }
+                    "hdpi" : "C:/Users/DELL/Downloads/beforeLogin.png",
+                    "xhdpi" : "C:/Users/DELL/Downloads/beforeLogin.png",
+                    "xxhdpi" : "C:/Users/DELL/Downloads/beforeLogin.png"
+                },
+                "useOriginalMsgbox" : false
             }
         }
     },

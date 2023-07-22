@@ -93,6 +93,10 @@
 		{
 			"path": "pages/components/catMsgEdit",
 			"style": {}
+		},
+		{
+			"path": "pages/components/catList",
+			"style": {}
 		}
 		
 	],

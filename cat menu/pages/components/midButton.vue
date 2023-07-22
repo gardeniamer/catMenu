@@ -4,7 +4,7 @@
 			<view class="push">
 				
 			</view>
-			<navbar left-icon="back" right-icon="bars" backgroundColor = transparent :border = "false" @clickLeft="back">
+			<navbar left-icon="back" right-icon="bars" backgroundColor = transparent :border = "false" @clickLeft="back" @clickRight="catList">
 				<template v-slot:default>
 						<view class="navWord">扫描</view>					
 				</template>
@@ -57,6 +57,52 @@
 			back() {
 				uni.switchTab({
 					url:'/pages/main'
+				})
+			},
+			
+			catList() {
+				uni.showLoading({
+					title:"加载中",
+				})
+				uni.request({
+					method:"GET",
+					url:'https://ai.ybinsure.com/s/api/getAccessToken',
+					data:{
+							accessKey: 'APPID_VRAuK415324F4G4r',
+							accessSecret: '450e7b721fe9c4d149bafa087c490dc6'					
+					},
+					success: (res1) => {
+						const token = res1.data.data.access_token
+						uni.request({
+							method:"POST",
+							url:'https://ai.ybinsure.com/s/api/getPetArchivesList',
+							header:{
+								'content-type':'application/json'
+							},
+							data:{
+								token:token,
+							},
+							success: (res2) => {
+								uni.hideLoading()
+								if(res2.data.status < 300) {
+									if(uni.getStorageSync("catList") == '' ||
+									uni.getStorageSync("catList") != res2.data.data.list) {
+										uni.setStorageSync("catList",res2.data.data.list)
+									}
+									uni.navigateTo({
+										url:"/pages/components/catList"
+									})
+								}
+								else {
+									uni.showToast({
+										icon:"none",
+										title: res2.data.message
+									})
+								}
+
+							}
+						})
+					}
 				})
 			},
 			
