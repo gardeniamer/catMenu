@@ -39,10 +39,10 @@
 
 <style>
 	.positionAll {
-		width: 100%;
+		margin: 20rpx auto;
+		width: 720rpx;
 		height: 120rpx;
 		position: relative;
-		background-color: #fff;
 	}
 	
 	.innerContent {
@@ -52,30 +52,33 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%,-50%);
+		background-color: #fff;
+		border-radius: 25rpx;
 	}
 	
 	.star {
-		width: 25px;
-		height: 24px;
+		width: 20px;
+		height: 19px;
 		vertical-align: middle;
+		transform: translateX(22rpx);
 	}
 	
 	.positionDetail {
 		display: inline-block;
-		transform: translate(10px,2px);
+		transform: translate(30rpx,4rpx);
 		font-size: 15px;
 	}
 	
 	.position {
 		width: 12px;
 		height: 16px;
-		transform: translate(15px,3px);
+		transform: translate(30rpx,12rpx);
 	}
 	
 	.positionDetails {
 		display: inline-block;
 		font-size: 8px;
-		transform: translate(20px);
+		transform: translate(40rpx,10rpx);
 		color: #a9a9a9;
 	}
 	
@@ -84,7 +87,7 @@
 		height: 50rpx;
 		position: absolute;
 		top: 50%;
-		left: 65%;
+		left: 68%;
 		transform: translateY(-50%);
 		border-radius: 60rpx;
 		display: flex;

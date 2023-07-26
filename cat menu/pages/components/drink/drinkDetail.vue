@@ -145,15 +145,16 @@ export default {
 }
 
 .detailLeft {
-	width: 28%;
+	width: 24%;
+	height: 1200rpx;
 	display: flex;
 	flex-direction: column;
+	justify-content: space-around;
 }
 
 .leftContent {
 	width: 100%;
-	height: 250rpx;
-	/* height: 16%; */
+	height: 175rpx;
 }
 
 .leftContent image {
@@ -161,7 +162,7 @@ export default {
 	width: 35rpx;
 	height: 40rpx;
 	display: block;
-	transform: translateY(60rpx);
+	transform: translateY(10rpx);
 }
 
 .leftImage {
@@ -175,7 +176,7 @@ export default {
 	font-size: 12px;
 	text-align: center; 	
 	line-height: 30rpx;
-	transform: translateY(60rpx);
+	transform: translateY(20rpx);
 }
 
 .leftContentActive {
@@ -190,7 +191,7 @@ export default {
 } */
 
 .detailRight {
-	width: 72%;
+	width: 76%;
 	display: flex;
 	flex-direction: column;
 	border-left: 8px solid #fff;
@@ -216,12 +217,16 @@ export default {
 	height: 100%;
 }
 
-.teaPhoto,.teaChoose {
+.teaPhoto {
 	flex: 1;
 }
 
+.teaChoose {
+	flex: 1.2;
+}
+
 .teaContent {
-	flex: 2;
+	flex: 1.8;
 	transform: translateX(5px);
 	margin: 60rpx 0 0 0;
 }
@@ -261,13 +266,14 @@ export default {
 }
 
 .chooseSize {
-	width: 100%;
+	margin: 0 auto;
+	width: 80%;
 	height: 60rpx;
 	text-align: center;
 	line-height: 60rpx;
 	border-radius: 50rpx;
 	background-color: #95d6bf;
-	transform: translate(-4rpx,120rpx);
+	transform: translate(0rpx,120rpx);
 	color: #f5faf8;
 	font-size: 14px;
 }

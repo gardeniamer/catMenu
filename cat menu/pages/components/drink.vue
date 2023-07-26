@@ -89,7 +89,7 @@
 
 .drinkSearch {
 	width: 700rpx;
-	height: 100rpx;
+	height: 80rpx;
 	margin: 10px auto 5px auto;
 	background-color: #fff;
 	border-radius: 50rpx;
@@ -97,17 +97,17 @@
 
 .search {
 	float: right;
-	width: 96rpx;
-	height: 96rpx;
-	transform: translate(-3rpx,2rpx);
+	width: 80rpx;
+	height: 80rpx;
+	transform: translate(-3rpx,0rpx);
 }
 
 .searchInput {
 	display: inline-block;
 	width: 500rpx;
-	height: 100rpx;
+	height: 80rpx;
 	transform: translateX(20px);
-	font-size: 20px;
+	font-size: 16px;
 }
 
 </style>
