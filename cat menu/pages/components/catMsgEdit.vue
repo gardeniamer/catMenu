@@ -88,7 +88,8 @@
 				monster:"",
 				dateOfBirth:"",
 				disease:"",
-				vaccine:""
+				vaccine:"",
+				token:""
 			}
 		},
 		
@@ -135,53 +136,66 @@
 					}
 				}
 				if(this.count == 0){
-					uni.request({
-						method:"GET",
-						url:'https://ai.ybinsure.com/s/api/getAccessToken',
-						data:{
-							accessKey: 'APPID_VRAuK415324F4G4r',
-							accessSecret: '450e7b721fe9c4d149bafa087c490dc6'					
-						},
-						
-						success:(res1)=> {
-							const token = res1.data.data.access_token
-							uni.request({
-								method:"POST",
-								url:'https://ai.ybinsure.com/s/api/createPetArchivesFromCatFace',
-								header:{
-									'content-type':'application/x-www-form-urlencoded'
-								},
-								data:{
-									token: token,
-									imageBase64: this.catImgReal,									nickname:this.list2.nickName,
-									gender: this.gender,
-									dateOfBirth:this.list2.dateOfBirth,
-									birthControlStatus: this.control,
-									mark:'monster' + ":" + this.list2.monster + ","
-											+ "disease" + ":" + this.list2.disease + ","
-											+ "vaccine" + ":" + this.list2.vaccine
-								},
-								success: (res2) => {
-									if(res2.data.status < 300){
-										uni.showToast({
-											icon:'success',
-											title:'存储成功'
-										})
-									}
-									else{
-										uni.showToast({
-											icon:"none",
-											title:res2.data.message
-										})
-									}
-
-									setTimeout(()=>{
-										uni.navigateBack()
-									},2000)
+					const petStore = new Promise((resolve, reject)=>{
+						uni.request({
+							method:"GET",
+							url:'https://ai.ybinsure.com/s/api/getAccessToken',
+							data:{
+								accessKey: 'APPID_VRAuK415324F4G4r',
+								accessSecret: '450e7b721fe9c4d149bafa087c490dc6'					
+							},
+							success: (res) => {
+								if(res.data.status < 300) {
+									this.token = res.data.data.access_token
+									uni.request({
+										method:"POST",
+										url:'https://ai.ybinsure.com/s/api/createPetArchivesFromCatFace',
+										header:{
+											'content-type':'application/x-www-form-urlencoded'
+										},
+										data:{
+											token: this.token,
+											imageBase64: this.catImgReal,									
+											nickname:this.list2.nickName,
+											gender: this.gender,
+											dateOfBirth:this.list2.dateOfBirth,
+											birthControlStatus: this.control,
+											mark:'monster' + ":" + this.list2.monster + ","
+													+ "disease" + ":" + this.list2.disease + ","
+													+ "vaccine" + ":" + this.list2.vaccine
+										},
+										success: (res) => {
+											if(res.data.status < 300){
+												resolve()
+											}
+											else{
+												reject(res.data.message)
+											}
+										}
+									})
 								}
-							})
-						}
-						
+								else {
+									reject(res.data.message)
+								}
+							}
+						})
+
+					})
+					
+					petStore.then((value)=>{
+						uni.showToast({
+							icon:'success',
+							title:'存储成功'
+						})
+					})
+					.catch((rea)=>{
+						uni.showToast({
+							icon:"none",
+							title: rea
+						})
+						setTimeout(()=>{
+							uni.navigateBack()
+						},1600)
 					})
 				}
 				else {

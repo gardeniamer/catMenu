@@ -39,6 +39,28 @@
 				icon:"none",
 				title:'目前为' + this.format + '点中间切换模式'
 			})
+			
+				// uni.request({
+				// 	method:"GET",
+				// 	url:'https://ai.ybinsure.com/s/api/getAccessToken',
+				// 	data:{
+				// 		accessKey: 'APPID_VRAuK415324F4G4r',
+				// 		accessSecret: '450e7b721fe9c4d149bafa087c490dc6'					
+				// 	},
+				// 	success: (res) => {
+				// 		if(res.data.status < 300) {
+				// 			// sessionStorage.setItem("token", res.data.data.access_token)
+				// 			uni.setStorageSync("token", res.data.data.access_token)
+				// 		}
+				// 		else {
+				// 			uni.showToast({
+				// 				icon:"none",
+				// 				title: res.data.message
+				// 			})
+				// 		}
+						
+				// 	}
+				// })
 
 		},
 		
@@ -49,7 +71,8 @@
 				'../../static/navigator/PhonePhoto.png'],
 				format:'存档模式',
 				formatCount: 0,
-				catImage:""
+				catImage:"",
+				token:""
 			}	
 		},
 		
@@ -64,46 +87,73 @@
 				uni.showLoading({
 					title:"加载中",
 				})
-				uni.request({
-					method:"GET",
-					url:'https://ai.ybinsure.com/s/api/getAccessToken',
-					data:{
+				const catAllGet = new Promise((resolve, reject)=>{
+					uni.request({
+						method:"GET",
+						url:'https://ai.ybinsure.com/s/api/getAccessToken',
+						data:{
 							accessKey: 'APPID_VRAuK415324F4G4r',
 							accessSecret: '450e7b721fe9c4d149bafa087c490dc6'					
-					},
-					success: (res1) => {
-						const token = res1.data.data.access_token
-						uni.request({
-							method:"POST",
-							url:'https://ai.ybinsure.com/s/api/getPetArchivesList',
-							header:{
-								'content-type':'application/json'
-							},
-							data:{
-								token:token,
-							},
-							success: (res2) => {
-								uni.hideLoading()
-								if(res2.data.status < 300) {
-									if(uni.getStorageSync("catList") == '' ||
-									uni.getStorageSync("catList") != res2.data.data.list) {
-										uni.setStorageSync("catList",res2.data.data.list)
-									}
-									uni.navigateTo({
-										url:"/pages/components/catList"
-									})
-								}
-								else {
-									uni.showToast({
-										icon:"none",
-										title: res2.data.message
-									})
-								}
-
+						},
+						success: (res) => {
+							if(res.data.status < 300) {
+								this.token === res.data.data.access_token? resolve(this.token)
+								: resolve(res.data.data.access_token)
 							}
-						})
-					}
+							else {
+								reject(res.data.message)
+							}
+						}
+					})
 				})
+
+				setTimeout(()=>{
+					catAllGet.then((value)=>{
+						this.token = value
+								return new Promise((resolve, reject)=>{
+								uni.request({
+									method:"POST",
+									url:'https://ai.ybinsure.com/s/api/getPetArchivesList',
+									header:{
+										'content-type':'application/json'
+										},
+									data:{
+										token: this.token,
+										},
+									success: (res2) => {
+										if(res2.data.status < 300) {
+											resolve(res2.data.data.list)
+										}
+										else {
+											reject(res2.data.message)
+										}				
+									}
+							})
+						}).then((value)=>{
+								uni.hideLoading()
+								if(uni.getStorageSync("catList") == '' ||
+									uni.getStorageSync("catList") != value) {
+									uni.setStorageSync("catList",value)
+								}
+								uni.navigateTo({
+									url:"/pages/components/catList"
+								})
+							})
+							.catch((rea)=>{
+								uni.hideLoading()
+								uni.showToast({
+									icon:"none",
+									title: rea
+								})
+							})
+					}).catch((rea)=>{
+						uni.hideLoading()
+						uni.showToast({
+							icon:"none",
+							title: rea
+						})
+					})
+				},1000)			
 			},
 			
 			superior(index) {
@@ -177,6 +227,7 @@
 		}
 		
 	}
+
 </script>
 
 <style>

@@ -52,7 +52,9 @@
 					birthControlStatus:'',
 					disease:'',
 					vaccine:''
-				}
+				},
+				token:"",
+				petId:""
 			}
 		},
 		
@@ -61,113 +63,15 @@
 				this.catImg = i
 				pathToBase64(i).then(i=>{
 					this.catImgReal = i
-				}).catch(err=>{
+				})
+				.catch(err=>{
 					console.log(err);
 				})
-		})
-		uni.showLoading({
-			title: '加载中'
-		})
-		setTimeout(()=>{
-			uni.request({
-				method:"GET",
-				url:'https://ai.ybinsure.com/s/api/getAccessToken',
-				data:{
-						accessKey: 'APPID_VRAuK415324F4G4r',
-						accessSecret: '450e7b721fe9c4d149bafa087c490dc6'					
-				},
+				})
+				setTimeout(()=>{
+					this.pet()
+				},200)
 				
-				success:(res1)=> {
-					const token = res1.data.data.access_token
-					uni.request({
-						method:"POST",
-						url:'https://ai.ybinsure.com/s/api/uploadPetImageFindPeytId',
-						header:{
-							'content-type':'application/x-www-form-urlencoded'
-							},
-						data:{
-							token: token,
-							imageBase64:this.catImgReal,
-							petType: 1,
-							recogType: 1,
-							},
-						success:(res2)=> {
-							if(res2.data.status < 300){
-								const petId = res2.data.data.petIds[0]
-								uni.request({
-									method:"POST",
-									url:'https://ai.ybinsure.com/s/api/getPetArchivesList',
-									header:{
-										'content-type':'application/json'
-									},
-									data:{
-										token:token,
-										petId:petId
-									},
-									
-									success:(res3) => {
-										uni.hideLoading()
-										uni.showToast({
-											title:"加载成功"
-										})
-										if(res3.data.status < 300) {
-											const data = res3.data.data.list[0]
-											this.list2.nickName = data.nickname	
-											if(data.gender == 1){
-												this.list2.gender = '母'
-											}
-											else if(data.gender == 0){
-												this.list2.gender = '公'
-											}
-											this.list2.dateOfBirth = data.dateOfBirth
-											if(data.birthControlStatus == 1){
-												this.list2.birthControlStatus = '是'
-											}
-											else if(data.birthControlStatus == 0){
-												this.list2.birthControlStatus = '否'
-											}									
-											for(let vol of data.mark.split(",")) {
-												if(vol.split(":")[0] == "monster"){
-													this.list2.monster = vol.split(":")[1]
-												}
-												else if(vol.split(":")[0] == "disease"){
-													this.list2.disease = vol.split(":")[1]
-												}
-												else if(vol.split(":")[0] == "vaccine"){
-													this.list2.vaccine = vol.split(":")[1]
-												}
-											}
-										}
-										else {
-											uni.hideLoading()
-											uni.showToast({
-												icon:"none",
-												title:res3.data.message
-											})
-										}
-										
-									}
-									
-								})
-							}
-							else {
-								uni.hideLoading()
-								uni.showToast({
-									icon:"none",
-									title:res2.data.message
-								})
-								setTimeout(()=>{
-									uni.navigateBack()
-								},1600)
-							}
-							
-						}
-					})
-				}
-				
-			})
-		},2000)
-			
 		},
 		
 		methods: {
@@ -175,6 +79,116 @@
 				uni.navigateBack()
 			},
 			
+			pet() {
+				uni.showLoading({
+					title: '加载中'
+				})
+				setTimeout(()=>{
+					(async function(){
+						try {
+							await catGet
+						}catch(e){
+							uni.hideLoading()
+							uni.showToast({
+								icon:"none",
+								title: e
+							})
+							uni.navigateBack()
+						}
+					})()
+				},1200)
+				
+				
+				const catGet = new Promise((resolve, reject)=>{
+					uni.request({
+						method:"GET",
+						url:'https://ai.ybinsure.com/s/api/getAccessToken',
+						data:{
+							accessKey: 'APPID_VRAuK415324F4G4r',
+							accessSecret: '450e7b721fe9c4d149bafa087c490dc6'					
+						},
+						success: (res) => {
+							if(res.data.status < 300) {
+								this.token = res.data.data.access_token
+								uni.request({
+									method:"POST",
+									url:'https://ai.ybinsure.com/s/api/uploadPetImageFindPeytId',
+									header:{
+										'content-type':'application/x-www-form-urlencoded'
+										},
+									data:{
+										token: this.token,
+										imageBase64:this.catImgReal,
+										petType: 1,
+										recogType: 1,
+										},
+									success: (res2) => {
+										if (res2.data.status < 300) {
+											this.petId = res2.data.data.petIds[0]
+											uni.request({
+												method:"POST",
+												url:'https://ai.ybinsure.com/s/api/getPetArchivesList',
+												header:{
+													'content-type':'application/json'
+													},
+												data:{
+													token:this.token,
+													petId:this.petId
+												},
+												success: (res3) => {
+													if(res3.data.status < 300) {
+														uni.hideLoading()
+														uni.showToast({
+															title:"加载成功"
+														})
+														const data = res3.data.data.list[0]
+														this.list2.nickName = data.nickname	
+														if(data.gender == 1){
+															this.list2.gender = '母'
+															}
+														else if(data.gender == 0){
+															this.list2.gender = '公'
+															}
+														this.list2.dateOfBirth = data.dateOfBirth
+														if(data.birthControlStatus == 1){
+															this.list2.birthControlStatus = '是'
+															}
+														else if(data.birthControlStatus == 0){
+															this.list2.birthControlStatus = '否'
+															}									
+														for(let vol of data.mark.split(",")) {
+															if(vol.split(":")[0] == "monster"){
+																this.list2.monster = vol.split(":")[1]
+																}
+															else if(vol.split(":")[0] == "disease"){
+																this.list2.disease = vol.split(":")[1]
+																}
+															else if(vol.split(":")[0] == "vaccine"){
+																this.list2.vaccine = vol.split(":")[1]
+																}
+														}
+														resolve()
+													}
+													else {
+														reject(res3.data.message)
+													}
+												}
+											})
+										}
+										else {
+											reject(res2.data.message)
+										}
+									}
+								})
+							}
+							else {
+								reject(res1.data.message)
+							}
+						}
+					})
+				})
+				
+			},
 		},
 		
 	}
