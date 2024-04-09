@@ -6,7 +6,7 @@
 		<navbar left-icon="back" right-icon="" backgroundColor = transparent :border = "false" @clickLeft="back">
 			<template v-slot:default>
 				<image src="../../static/navigator/neiko.png" mode="" class="navbar"></image>
-					<view class="navWord">猫咪列表</view>					
+					<view class="navWord">宠物列表</view>					
 			</template>
 		</navbar>
 		<view class="showMsg">

@@ -9,8 +9,8 @@
 						<view class="navWord">扫描</view>					
 				</template>
 			</navbar>
-			<view class="scanPhoto">
-				<image src="../../static/navigator/scanPhoto.png" mode=""></image>
+			<view class="scanPhoto" @click="exchange($event)">
+				<image src="../../static/navigator/scanPhoto2.png" mode=""></image>
 			</view>
 			<view class="exportImage">
 				<view class="images" v-for = "(item,index) in list" :key="index">
@@ -34,34 +34,21 @@
 		},
 		
 		onLoad() {
-			
+			if(!uni.getStorageSync("petMsg")) {
+				uni.setStorageSync("petMsg", {})
+			}
+			uni.setStorageSync("petKind", 1)
 			uni.showToast({
 				icon:"none",
 				title:'目前为' + this.format + '点中间切换模式'
 			})
-			
-				// uni.request({
-				// 	method:"GET",
-				// 	url:'https://ai.ybinsure.com/s/api/getAccessToken',
-				// 	data:{
-				// 		accessKey: 'APPID_VRAuK415324F4G4r',
-				// 		accessSecret: '450e7b721fe9c4d149bafa087c490dc6'					
-				// 	},
-				// 	success: (res) => {
-				// 		if(res.data.status < 300) {
-				// 			// sessionStorage.setItem("token", res.data.data.access_token)
-				// 			uni.setStorageSync("token", res.data.data.access_token)
-				// 		}
-				// 		else {
-				// 			uni.showToast({
-				// 				icon:"none",
-				// 				title: res.data.message
-				// 			})
-				// 		}
-						
-				// 	}
-				// })
-
+			setTimeout(()=>{
+				uni.showToast({
+					icon:"none",
+					title:`目前识别对象为 ${this.animal} 
+					点击中间图片位置切换识别对象`
+				})
+			},2000)
 		},
 		
 		data() {
@@ -71,6 +58,8 @@
 				'../../static/navigator/PhonePhoto.png'],
 				format:'存档模式',
 				formatCount: 0,
+				animal: "猫",
+				animalCount: 1,
 				catImage:"",
 				token:""
 			}	
@@ -83,77 +72,48 @@
 				})
 			},
 			
+			exchange($event) {
+				console.log($event.detail);
+				if($event.detail.x >= 250 && $event.detail.x < 360) {
+					if(this.animalCount == 0) {
+						this.animal = "猫"
+						uni.showToast({
+							icon:"none",
+							title:`目前识别对象为 ${this.animal} 
+							点击中间图片位置切换识别对象`
+						})
+						this.animalCount = 1
+						uni.setStorageSync("petKind", 1)
+					}
+				}
+				if($event.detail.x > 20 && $event.detail.x < 250) {
+					if(this.animalCount == 1) {
+						this.animal = "狗"
+						uni.showToast({
+							icon:"none",
+							title:`目前识别对象为 ${this.animal} 
+							点击中间图片位置切换识别对象`
+						})
+						this.animalCount = 0
+						uni.setStorageSync("petKind", 0)
+					}
+				}
+			},
+			
 			catList() {
 				uni.showLoading({
 					title:"加载中",
 				})
-				const catAllGet = new Promise((resolve, reject)=>{
-					uni.request({
-						method:"GET",
-						url:'https://ai.ybinsure.com/s/api/getAccessToken',
-						data:{
-							accessKey: 'APPID_VRAuK415324F4G4r',
-							accessSecret: '450e7b721fe9c4d149bafa087c490dc6'					
-						},
-						success: (res) => {
-							if(res.data.status < 300) {
-								this.token === res.data.data.access_token? resolve(this.token)
-								: resolve(res.data.data.access_token)
-							}
-							else {
-								reject(res.data.message)
-							}
-						}
-					})
+				let objs = uni.getStorageSync("petMsg")
+				let arr = []
+				for(let item in objs) {
+					arr.push(objs[item])
+				}
+				uni.setStorageSync("catList", arr)
+				uni.hideLoading()
+				uni.navigateTo({
+					url: '/pages/components/catList'
 				})
-
-				setTimeout(()=>{
-					catAllGet.then((value)=>{
-						this.token = value
-								return new Promise((resolve, reject)=>{
-								uni.request({
-									method:"POST",
-									url:'https://ai.ybinsure.com/s/api/getPetArchivesList',
-									header:{
-										'content-type':'application/json'
-										},
-									data:{
-										token: this.token,
-										},
-									success: (res2) => {
-										if(res2.data.status < 300) {
-											resolve(res2.data.data.list)
-										}
-										else {
-											reject(res2.data.message)
-										}				
-									}
-							})
-						}).then((value)=>{
-								uni.hideLoading()
-								if(uni.getStorageSync("catList") == '' ||
-									uni.getStorageSync("catList") != value) {
-									uni.setStorageSync("catList",value)
-								}
-								uni.navigateTo({
-									url:"/pages/components/catList"
-								})
-							})
-							.catch((rea)=>{
-								uni.hideLoading()
-								uni.showToast({
-									icon:"none",
-									title: rea
-								})
-							})
-					}).catch((rea)=>{
-						uni.hideLoading()
-						uni.showToast({
-							icon:"none",
-							title: rea
-						})
-					})
-				},1000)			
 			},
 			
 			superior(index) {
