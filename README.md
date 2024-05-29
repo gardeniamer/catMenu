@@ -4,11 +4,11 @@
 
 ​			●利用uni-app (基于vue2) 开发完成的一个前端化应用。
 
-​			●猫咪的面部建档与读档利用了**数智客（[数智客官网—“大数据+AI”融合应用服务平台_数据API接口、实名认证接口、银联接口、运营商接口、身份证OCR、人脸识别、活体检测、数字智库专家咨询_直连数源 更安全！ (shuzike.com)](https://www.shuzike.com/)）**里的公开API。
+​			●猫猫与狗狗的面部建档与读档利用了[文档中心 - 快瞳科技文档中心 (inspirvision.cn)](https://inspirvision.cn/spa/documentCenter/ocr-finance/mark?id=3)里的公开API。
 
 #### 	2.功能：
 
-​			●猫咪与狗狗面部建档与读档  (相机与相册功能均可)**【已用promise 或 async进行了封装】**。
+​			●猫猫与狗狗面部建档与读档  (相机与相册功能均可)**【已用promise 或 async进行了封装】**。
 
 ​			●日历的打卡与标记（手动输入或日历上选择）。
 

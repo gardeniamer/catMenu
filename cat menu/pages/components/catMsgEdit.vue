@@ -100,21 +100,14 @@
 		},
 
 		onLoad() {
-			uni.showLoading({
-				title: "加载中",
-				icon: "none"
-			})
-
 			uni.$on("transferEdit", (i) => {
 				this.catImg = i
 				pathToBase64(i).then(i => {
 					this.catImgReal = i
-					if (this.catImgReal != "") {
-						uni.hideLoading()
-					}
 				}).catch(err => {
 					console.log(err);
 				})
+
 			})
 
 		},
@@ -152,39 +145,28 @@
 				if (this.count == 0) {
 					uni.showLoading({
 						title: "加载中",
-						icon: "none"
 					})
 					if (uni.getStorageSync("petKind") == 1) {
 						const petStore = new Promise((resolve, reject) => {
+
 							uni.request({
-								method: "POST",
-								url: 'https://api.shuzike.com/lifeservice/check2/102',
-								header: {
-									'Content-Type': 'application/json',
-									'UserAuthKey': '7840de5c-7220-470e-be5e-836198da6f231209'
-								},
+								method: "GET",
+								url: "https://ai.inspirvision.cn/s/api/getAccessToken",
 								data: {
-									imageBase64: this.catImgReal.split(",")[1],
-									nickname: this.list2.nickName,
-									petId: "",
-									groupId: "",
-									petDbId: "",
-									isVerification: "",
-									gender: String(this.gender),
-									dateOfBirth: this.list2.dateOfBirth,
-									birthControlStatus: String(this.control),
-									mark: 'monster' + ":" + this.list2.monster + "," +
-										"disease" + ":" + this.list2.disease + "," +
-										"vaccine" + ":" + this.list2.vaccine
+									accessKey: 'APPID_Lh13b1Q8485m0cb4',
+									accessSecret: '89e600f249ff25c4643c2aa9525a059f'
 								},
-								success: (res) => {
-									uni.hideLoading()
-									if (res.data.msg == "成功") {
-										let obj = uni.getStorageSync("petMsg")
-										obj[res.data.data.result.petId] = {
-											images:[{
-												url: this.catImg
-											}],
+								success: (res1) => {
+									const token = res1.data.data.access_token
+									uni.request({
+										method: "POST",
+										url: "https://ai.inspirvision.cn/s/api/createPetArchivesFromCatFace",
+										header: {
+											'Content-Type': 'application/x-www-form-urlencoded'
+										},
+										data: {
+											token: token,
+											imageBase64: this.catImgReal,
 											nickname: this.list2.nickName,
 											gender: this.gender,
 											dateOfBirth: this.list2.dateOfBirth,
@@ -192,16 +174,20 @@
 											mark: 'monster' + ":" + this.list2.monster + "," +
 												"disease" + ":" + this.list2.disease + "," +
 												"vaccine" + ":" + this.list2.vaccine
+										},
+										success: (res2) => {
+											if (res2.data.status < 300) {
+												resolve()
+											} else {
+												reject(res2.data.message)
+											}
 										}
-										uni.setStorageSync("petMsg", obj)
-										resolve()
-									} else {
-										reject(res.data.msg)
-									}
+									})
 								}
 							})
 						})
 						petStore.then((value) => {
+								uni.hideLoading()
 								uni.showToast({
 									icon: 'success',
 									title: '存储成功'
@@ -211,6 +197,7 @@
 								}, 1600)
 							})
 							.catch((rea) => {
+								uni.hideLoading()
 								uni.showToast({
 									icon: "none",
 									title: rea
@@ -224,34 +211,23 @@
 					if (uni.getStorageSync("petKind") == 0) {
 						const petStore = new Promise((resolve, reject) => {
 							uni.request({
-								method: "POST",
-								url: 'https://api.shuzike.com/lifeservice/check2/115',
-								header: {
-									'content-type': 'application/json',
-									'UserAuthKey': '7840de5c-7220-470e-be5e-836198da6f231209'
-								},
+								method: "GET",
+								url: "https://ai.inspirvision.cn/s/api/getAccessToken",
 								data: {
-									imageBase64: this.catImgReal.split(",")[1],
-									nickname: this.list2.nickName,
-									petId: "",
-									groupId: "",
-									petDbId: "",
-									isVerification: "",
-									gender: String(this.gender),
-									dateOfBirth: this.list2.dateOfBirth,
-									birthControlStatus: String(this.control),
-									mark: 'monster' + ":" + this.list2.monster + "," +
-										"disease" + ":" + this.list2.disease + "," +
-										"vaccine" + ":" + this.list2.vaccine
+									accessKey: 'APPID_Lh13b1Q8485m0cb4',
+									accessSecret: '89e600f249ff25c4643c2aa9525a059f'
 								},
-								success: (res) => {
-									uni.hideLoading()
-									if (res.data.msg == "成功") {
-										let obj = uni.getStorageSync("petMsg")
-										obj[res.data.data.result.petId] = {
-											images:[{
-												url: this.catImg
-											}],
+								success: (res1) => {
+									const token = res1.data.data.access_token
+									uni.request({
+										method: "POST",
+										url: "https://ai.inspirvision.cn/s/api/createPetArchivesFromDogFace",
+										header: {
+											'Content-Type': 'application/x-www-form-urlencoded'
+										},
+										data: {
+											token: token,
+											imageBase64: this.catImgReal,
 											nickname: this.list2.nickName,
 											gender: this.gender,
 											dateOfBirth: this.list2.dateOfBirth,
@@ -259,16 +235,20 @@
 											mark: 'monster' + ":" + this.list2.monster + "," +
 												"disease" + ":" + this.list2.disease + "," +
 												"vaccine" + ":" + this.list2.vaccine
+										},
+										success: (res2) => {
+											if (res2.data.status < 300) {
+												resolve()
+											} else {
+												reject(res2.data.message)
+											}
 										}
-										uni.setStorageSync("petMsg", obj)
-										resolve()
-									} else {
-										reject(res.data.msg)
-									}
+									})
 								}
 							})
 						})
 						petStore.then((value) => {
+							uni.hideLoading()
 								uni.showToast({
 									icon: 'success',
 									title: '存储成功'
@@ -278,6 +258,7 @@
 								}, 1600)
 							})
 							.catch((rea) => {
+								uni.hideLoading()
 								uni.showToast({
 									icon: "none",
 									title: rea

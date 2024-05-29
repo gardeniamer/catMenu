@@ -1,97 +1,98 @@
 <template>
 
-		<view class="community">
-			<view class="push">
-				
-			</view>
-			<navbar left-icon="back" right-icon="bars" backgroundColor = transparent :border = "false" @clickLeft="back" @clickRight="catList">
-				<template v-slot:default>
-						<view class="navWord">扫描</view>					
-				</template>
-			</navbar>
-			<view class="scanPhoto" @click="exchange($event)">
-				<image src="../../static/navigator/scanPhoto2.png" mode=""></image>
-			</view>
-			<view class="exportImage">
-				<view class="images" v-for = "(item,index) in list" :key="index">
-					<image :src="item" mode="" 
-					:class="{special2: index == 1,special3: index == 2}"
-					@click = "superior(index)"></image>
-				</view>
-			</view>
-			<view class="push2">
-				
+	<view class="community">
+		<view class="push">
+
+		</view>
+		<navbar left-icon="back" right-icon="bars" backgroundColor=transparent :border="false" @clickLeft="back"
+			@clickRight="catList">
+			<template v-slot:default>
+				<view class="navWord">扫描</view>
+			</template>
+		</navbar>
+		<view class="scanPhoto" @click="exchange($event)">
+			<image src="../../static/navigator/scanPhoto2.png" mode=""></image>
+		</view>
+		<view class="exportImage">
+			<view class="images" v-for="(item,index) in list" :key="index">
+				<image :src="item" mode="" :class="{special2: index == 1,special3: index == 2}"
+					@click="superior(index)"></image>
 			</view>
 		</view>
+		<view class="push2">
+
+		</view>
+	</view>
 
 </template>
 
 <script>
-	import navbar from "../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"
+	import { pathToBase64 } from "../../js_sdk/mmmm-image-tools"
+import navbar from "../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"
+
 	export default {
-		components:{
+		components: {
 			navbar,
 		},
-		
+
 		onLoad() {
-			if(!uni.getStorageSync("petMsg")) {
-				uni.setStorageSync("petMsg", {})
-			}
 			uni.setStorageSync("petKind", 1)
 			uni.showToast({
-				icon:"none",
-				title:'目前为' + this.format + '点中间切换模式'
+				icon: "none",
+				title: '目前为' + this.format + '点中间切换模式'
 			})
-			setTimeout(()=>{
+			setTimeout(() => {
 				uni.showToast({
-					icon:"none",
-					title:`目前识别对象为 ${this.animal} 
+					icon: "none",
+					title: `目前识别对象为 ${this.animal} 
 					点击中间图片位置切换识别对象`
 				})
-			},2000)
+			}, 2000)
+
 		},
-		
+
 		data() {
 			return {
-				list:['../../static/navigator/PhoneCamera.png',
-				'../../static/navigator/mid.png',
-				'../../static/navigator/PhonePhoto.png'],
-				format:'存档模式',
+				list: ['../../static/navigator/PhoneCamera.png',
+					'../../static/navigator/mid.png',
+					'../../static/navigator/PhonePhoto.png'
+				],
+				format: '存档模式',
 				formatCount: 0,
 				animal: "猫",
 				animalCount: 1,
-				catImage:"",
-				token:""
-			}	
+				catImage: "",
+				token: ""
+			}
 		},
-		
+
 		methods: {
 			back() {
 				uni.switchTab({
-					url:'/pages/main'
+					url: '/pages/main'
 				})
 			},
-			
+
 			exchange($event) {
 				console.log($event.detail);
-				if($event.detail.x >= 250 && $event.detail.x < 360) {
-					if(this.animalCount == 0) {
+				if ($event.detail.x >= 250 && $event.detail.x < 360) {
+					if (this.animalCount == 0) {
 						this.animal = "猫"
 						uni.showToast({
-							icon:"none",
-							title:`目前识别对象为 ${this.animal} 
+							icon: "none",
+							title: `目前识别对象为 ${this.animal} 
 							点击中间图片位置切换识别对象`
 						})
 						this.animalCount = 1
 						uni.setStorageSync("petKind", 1)
 					}
 				}
-				if($event.detail.x > 20 && $event.detail.x < 250) {
-					if(this.animalCount == 1) {
+				if ($event.detail.x > 20 && $event.detail.x < 250) {
+					if (this.animalCount == 1) {
 						this.animal = "狗"
 						uni.showToast({
-							icon:"none",
-							title:`目前识别对象为 ${this.animal} 
+							icon: "none",
+							title: `目前识别对象为 ${this.animal} 
 							点击中间图片位置切换识别对象`
 						})
 						this.animalCount = 0
@@ -99,103 +100,142 @@
 					}
 				}
 			},
-			
+
 			catList() {
 				uni.showLoading({
-					title:"加载中",
+					title: "加载中",
 				})
-				let objs = uni.getStorageSync("petMsg")
-				let arr = []
-				for(let item in objs) {
-					arr.push(objs[item])
-				}
-				uni.setStorageSync("catList", arr)
-				uni.hideLoading()
-				uni.navigateTo({
-					url: '/pages/components/catList'
+
+				uni.request({
+					method: "GET",
+					url: "https://ai.inspirvision.cn/s/api/getAccessToken",
+					data: {
+						accessKey: 'APPID_Lh13b1Q8485m0cb4',
+						accessSecret: '89e600f249ff25c4643c2aa9525a059f'
+					},
+					success: (res1) => {
+						const token = res1.data.data.access_token
+						uni.request({
+							method: "POST",
+							url: "https://ai.inspirvision.cn/s/api/getPetArchivesList",
+							header: {
+								'Content-Type': 'application/json'
+							},
+							data: {
+								token: token
+							},
+							success: (res2) => {
+								if (res2.data.status < 300) {
+									const objs = res2.data.data.list
+									let arr = []
+									for (let item of objs) {
+										if(item.mark) {
+											arr.push({
+												nickname: item.nickname,
+												gender: item.gender,
+												mark: item.mark,
+												images: [{
+													url: item.images[0].url
+												}]	
+											})
+										}
+									}
+									uni.setStorageSync("catList", arr)
+									uni.hideLoading()
+									uni.navigateTo({
+										url: '/pages/components/catList'
+									})
+								}
+							}
+						})
+					}
 				})
 			},
-			
+
 			superior(index) {
-				if(index == 1) {
-					this.format = this.format == '存档模式' ? '查询模式':'存档模式'
+				if (index == 1) {
+					this.format = this.format == '存档模式' ? '查询模式' : '存档模式'
 					uni.showToast({
-						icon:"success",
-						title:'目前为' + this.format
+						icon: "success",
+						title: '目前为' + this.format
 					})
 				}
-				
-				if(index == 0) {
-					if(this.format == '存档模式'){
-						uni.chooseImage({
-							count: 1,
-							sourceType:['camera'],
-							success:(res) => {
-								uni.navigateTo({
-									url:'/pages/components/catMsgEdit'
-								})
-								uni.$emit("transferEdit",res.tempFilePaths[0])
-							}
-						})
-					}
-					else if(this.format == '查询模式') {
-						uni.chooseImage({
-							count: 1,
-							sourceType:['camera'],
-							success:(res) => {
-								uni.navigateTo({
-									url:'/pages/components/catMsg'
-								})
-								uni.$emit("transfer",res.tempFilePaths[0])
-							}
-						})
-					}
-				}
-				
-				if(index == 2) {
-					if(this.format == '存档模式'){
-						uni.chooseImage({
-							count: 1,
-							sourceType: ['album'],
-							success:(res) => {
-								uni.navigateTo({
-									url:'/pages/components/catMsgEdit'
-								})
-								uni.$emit("transferEdit",res.tempFilePaths[0])
-							}
-						})
-					}
-					
-					else if(this.format == '查询模式'){
-						uni.chooseImage({
-							count: 1,
-							sourceType: ['album'],
-							success: (res) => {	
-								uni.navigateTo({
-									url:'/pages/components/catMsg'
-								})
-								uni.$emit("transfer",res.tempFilePaths[0])
-							}
-						})
-						
-					}
-					
-				}
-				
-			}
-			
-		}
-		
-	}
 
+				if (index == 0) {
+					if (this.format == '存档模式') {
+						uni.chooseImage({
+							count: 1,
+							sourceType: ['camera'],
+							success: (res) => {
+								setTimeout(()=>{
+									uni.$emit("transferEdit", res.tempFilePaths[0])								
+								}, 500)
+								uni.navigateTo({
+									url: '/pages/components/catMsgEdit'
+								})
+							}
+						})
+					} else if (this.format == '查询模式') {
+						uni.chooseImage({
+							count: 1,
+							sourceType: ['camera'],
+							success: (res) => {
+								setTimeout(()=>{
+									uni.$emit("transfer", res.tempFilePaths[0])
+								},500)
+								uni.navigateTo({
+									url: '/pages/components/catMsg'
+								})
+							}
+						})
+					}
+				}
+
+				if (index == 2) {
+					if (this.format == '存档模式') {
+						uni.chooseImage({
+							count: 1,
+							sourceType: ['album'],
+							success: (res) => {
+								setTimeout(()=>{
+									uni.$emit("transferEdit", res.tempFilePaths[0])								
+								}, 500)
+								uni.navigateTo({
+									url: '/pages/components/catMsgEdit'
+								})
+							}
+						})
+					} else if (this.format == '查询模式') {
+						uni.chooseImage({
+							count: 1,
+							sourceType: ['album'],
+							success: (res) => {
+								setTimeout(()=>{
+									uni.$emit("transfer", res.tempFilePaths[0])
+								},500)
+								uni.navigateTo({
+									url: '/pages/components/catMsg'
+								})
+							}
+						})
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
 </script>
 
 <style>
 	* {
 		margin: 0;
 		padding: 0;
-	}	
-		
+	}
+
 	.community {
 		background-color: #f0f0f0;
 		background-color: #f0f0f0;
@@ -204,18 +244,18 @@
 		background-size: 100%;
 		height: 1670rpx;
 	}
-	
+
 	.push {
 		width: 100%;
 		height: 90rpx;
 	}
-	
+
 	.navbar {
 		width: 30px;
 		height: 25px;
-		transform: translate(65px,8px);
-	}	
-		
+		transform: translate(65px, 8px);
+	}
+
 	.navWord {
 		width: 100%;
 		height: 100%;
@@ -223,19 +263,19 @@
 		text-align: center;
 		line-height: 44px;
 	}
-	
+
 	.scanPhoto {
 		margin: 60rpx auto 100rpx auto;
 		width: 700rpx;
 		height: 1000rpx;
 	}
-	
+
 	.scanPhoto image {
 		width: 100%;
 		height: 100%;
 		border-radius: 60rpx;
 	}
-	
+
 	.exportImage {
 		margin: 0 auto;
 		width: 660rpx;
@@ -247,28 +287,27 @@
 		text-align: center;
 		transform: translateY(-30rpx);
 	}
-	
+
 	.images {
 		width: 100rpx;
 		height: 80%;
 	}
-	
+
 	.special2 {
 		width: 85rpx !important;
 	}
-	
+
 	.special3 {
 		width: 90rpx !important;
 	}
-	
+
 	.images image {
 		width: 100%;
 		height: 100%;
 	}
-	
+
 	.push2 {
 		width: 100%;
 		height: 40rpx;
 	}
-	
 </style>
